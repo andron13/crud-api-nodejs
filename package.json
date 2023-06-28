@@ -1,7 +1,7 @@
 {
   "scripts": {
-    "build": "webpack --mode=production",
-    "watch": "npx nodemon",
+    "start:prod": "webpack && node dist/bundle.js",
+    "start:dev": "npx nodemon",
     "lint": "eslint src",
     "eslint": "eslint --ext .js --ext .ts src",
     "eslint:fix": "eslint --fix --ext .js --ext .ts src",
