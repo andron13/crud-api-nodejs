@@ -1,9 +1,25 @@
-const http = require('http');
+import * as http from 'http';
+import { port, hostname } from './utils/config';
+import * as os from 'os';
+import cluster from 'cluster';
 
-const {port, hostname} = require('./utils/config');
+const numCPUs = os.cpus().length;
 
-/*const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT;*/
+const isMulti = process?.argv.filter((element) => element.startsWith('--isMulti'))[0]?.split('=')[1] === 'true';
+
+console.log('###### isMulti  ######', isMulti);
+
+/*
+if (cluster.isMaster) {
+  // Создание рабочих процессов
+  for (let i = -1; i < numCPUs - 2; i++) {
+    cluster.fork(port + i); // Передача порта в качестве переменной окружения
+  }
+} else {
+  // Запуск сервера для каждого рабочего процесса
+  require('./app.js');
+}
+*/
 
 const server = http.createServer((request, response) => {
   response.statusCode = 200;
