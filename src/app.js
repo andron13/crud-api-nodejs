@@ -1,15 +1,12 @@
 import * as http from 'http';
 import { port, hostname } from './utils/config';
-import * as os from 'os';
 import cluster from 'cluster';
 
-const numCPUs = os.cpus().length;
-
-const isMulti = process?.argv.filter((element) => element.startsWith('--isMulti'))[0]?.split('=')[1] === 'true';
+import { isMulti } from './utils/export';
+import { numCPUs } from './utils/osCommand';
 
 console.log('###### isMulti  ######', isMulti);
 
-/*
 if (cluster.isMaster) {
   // Создание рабочих процессов
   for (let i = -1; i < numCPUs - 2; i++) {
@@ -19,7 +16,6 @@ if (cluster.isMaster) {
   // Запуск сервера для каждого рабочего процесса
   require('./app.js');
 }
-*/
 
 const server = http.createServer((request, response) => {
   response.statusCode = 200;
