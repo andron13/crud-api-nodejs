@@ -1,13 +1,14 @@
 import * as http from 'http';
-import { port, hostname } from './utils/config';
-import cluster from 'cluster';
-
+import { config } from './utils/config';
 import { isMulti } from './utils/export';
-import { numCPUs } from './utils/osCommand';
 
+const hostname: string = config.hostname || '127.0.0.1';
+const port: string | undefined = config.port;
+console.log(port);
+console.log(hostname);
 console.log('###### isMulti  ######', isMulti);
 
-if (cluster.isMaster) {
+/*if (cluster.isMaster) {
   // Создание рабочих процессов
   for (let i = -1; i < numCPUs - 2; i++) {
     cluster.fork(port + i); // Передача порта в качестве переменной окружения
@@ -15,7 +16,7 @@ if (cluster.isMaster) {
 } else {
   // Запуск сервера для каждого рабочего процесса
   require('./app.js');
-}
+}*/
 
 const server = http.createServer((request, response) => {
   response.statusCode = 200;
@@ -26,6 +27,6 @@ const server = http.createServer((request, response) => {
   response.end();
 });
 
-server.listen(port, hostname, () => {
+server.listen(port, () => {
   console.log(`Server starts on http://${hostname}:${port}/`);
 });

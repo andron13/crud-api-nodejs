@@ -1,5 +1,5 @@
-import { v4 as uuidv4, validate } from 'uuid';
-import { IUser } from '../type/user';
+import { v4 as uuidv4, validate } from "uuid";
+import { IUser } from "../types/user";
 
 export class User implements IUser {
   id: string;
