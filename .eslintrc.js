@@ -16,6 +16,8 @@ module.exports = {
     'no-var': 'error',
     'no-unused-vars': 'off',
     'prefer-const': 'off',
+    'max-len': ['error', { code: 125 }],
     '@typescript-eslint/no-var-requires': 'off',
+    '@typescript-eslint/ban-ts-comment': 'off',
   },
 };

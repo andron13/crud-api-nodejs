@@ -1,6 +1,6 @@
-export interface User {
-  id: string; // id — unique identifier (string, uuid) generated on server side
+export interface IUser {
+  id: string;
   username: string;
   age: number;
-  hobbies: Array<string> | [];
+  hobbies: string[];
 }

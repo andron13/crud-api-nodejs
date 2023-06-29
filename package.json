@@ -2,7 +2,7 @@
   "scripts": {
     "start:prod": "webpack && node dist/bundle.js",
     "start:dev": "npx nodemon",
-    "start:multi": "node ./src/app.js -- --isMulti=true",
+    "start:multi": "node src/app.js -- --isMulti=true",
     "lint": "eslint src",
     "eslint": "eslint --ext .js --ext .ts src",
     "eslint:fix": "eslint --fix --ext .js --ext .ts src",

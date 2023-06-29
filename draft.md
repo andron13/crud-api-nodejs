@@ -1,10 +1,3 @@
-PORT=4000 node ./src/app.js
-PORT=4000 NODE_ENV=development node ./src/app.js
-
-const hostname = process.env.HOST || 'localhost';
-const port = process.env.PORT;
-
-"start:prod": "cross-env webpack --config webpack.config.js && node dist/build.js ",
 # Задание: CRUD API
 
 ## Описание
@@ -71,3 +64,18 @@ const port = process.env.PORT;
   2. Второй запрос `GET`, отправленный на `localhost:4002/api`, должен вернуть созданного пользователя.
   3. Третий запрос `DELETE`, отправленный на `localhost:4003/api`, удаляет созданного пользователя.
   4. Четвертый запрос `GET`, отправленный на `localhost:4001/api`, должен вернуть **404** статусный код для созданного пользователя.
+
+
+
+PORT=4000 node ./src/app.js
+PORT=4000 NODE_ENV=development node ./src/app.js
+
+const hostname = process.env.HOST || 'localhost';
+const port = process.env.PORT;
+
+let server: http.Server<
+typeof http.IncomingMessage,
+typeof http.ServerResponse
+>;
+>
+"start:prod": "cross-env webpack --config webpack.config.js && node dist/build.js ",
