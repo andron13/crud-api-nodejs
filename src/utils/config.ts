@@ -1,9 +1,5 @@
-import * as dotenv from 'dotenv';
-
-dotenv.config();
-
 export const config = {
   hostname: process.env.HOST,
-  port: process.env.PORT,
+  port: Number(process.env.PORT) || 4000,
   workerPort: process.env.WORKER_PORT,
 };
