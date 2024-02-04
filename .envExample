@@ -1,0 +1,6 @@
+Plz create .env and use it with your credentials. FOR EXAMPLE:
+PORT=4000
+HOST=localhost
+WORKER_PORT=4001
+#NODE_ENV=development
+NODE_UNIQUE_ID
