@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang='en'>
+<head>
+  <meta charset='UTF-8'>
+  <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+  <script src='https://cdn.tailwindcss.com'></script>
+
+  <title>CRUD API</title>
+</head>
+<body
+  class='bg-blue-50 flex flex-col items-center justify-center min-h-screen py-2'>
+<div class='bg-white rounded-lg shadow-lg p-6 mx-4 w-full sm:w-3/4 lg:w-1/2'>
+  <h2 class='text-2xl font-bold mb-4 text-gray-800'>CRUD API</h2>
+  <ol>
+    <li>
+      <a
+        href='https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md'
+        class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>Assignment:
+        CRUD API</a>
+    </li>
+    <li>
+      <a
+        href='https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/score.md'
+        class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>Scoring:
+        CRUD API</a>
+    </li>
+  </ol>
+
+  <p class='mb-4 text-gray-700'>Your task is to implement simple CRUD API using
+    in-memory database underneath.</p>
+
+  <h3 class='text-xl font-bold mb-2 text-gray-800'>Technical requirements</h3>
+  <ul class='list-disc list-inside mb-4 text-gray-700'>
+    <li>Task can be implemented on Javascript or Typescript</li>
+    <li>Only certain libraries are allowed</li>
+    <li>Use 20 LTS version of Node.js</li>
+    <li>Prefer asynchronous API whenever possible</li>
+  </ul>
+
+  <h3 class='text-xl font-bold mb-2 text-gray-800'>Implementation details</h3>
+  <ol>
+    <li>
+      <a href='api/users' target='_blank'
+         class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>Link
+        to the first GET endpoint</a>
+    </li>
+    <li>
+      <a href='api/users/d47befbe-2ee9-4d9f-bf4f-ff1781438f74' target='_blank'
+         class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>
+        Link with valid UUID : d47befbe-2ee9-4d9f-bf4f-ff1781438f74, but (hope) not userID
+      </a>
+    </li>
+    <li>
+      <a href='api/users/d47befbe-2ee9-4d9f' target='_blank'
+         class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>
+        Link with invalid ID - d47befbe-2ee9-4d9f
+      </a>
+    </li>
+    <li>
+      <a href='api/usersd47befbe-2ee9-4d9f' target='_blank'
+         class='text-blue-500 hover:bg-blue-100 hover:shadow inline-block mb-2 p-2 rounded transition'>
+        Broken link
+      </a>
+    </li>
+  </ol>
+
+  <p class='mt-4 text-gray-700'>Please, check the first endpoint in the new
+    browser tab by clicking the link above.</p>
+</div>
+</body>
+</html>

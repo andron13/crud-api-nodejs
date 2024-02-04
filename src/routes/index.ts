@@ -1,12 +1,12 @@
 import { IncomingMessage, ServerResponse } from 'http';
-
 import * as url from 'url';
 
+import { getFront } from './front';
 import { deleteHandler, getHandler, postHandler, putHandler } from './user';
-import { ErrorMessage, HttpStatus, customSendResponse } from '../utils';
+import { MESSAGES, HttpStatus, customSendResponse, HttpMethod } from '../utils';
 
 const fourHundred = (response: ServerResponse): void => {
-  customSendResponse(response, HttpStatus.BAD_REQUEST, { message: ErrorMessage.PAGE_NOT_FOUND });
+  customSendResponse(response, HttpStatus.BAD_REQUEST, { message: MESSAGES.PAGE_NOT_FOUND });
 };
 
 const router = (request: IncomingMessage, response: ServerResponse): void => {
@@ -14,18 +14,24 @@ const router = (request: IncomingMessage, response: ServerResponse): void => {
   const parsedUrl = url.parse(request.url as string, true);
   const pathName = parsedUrl.pathname;
 
+  if (pathName === '/' && method === HttpMethod.GET) {
+    getFront(request, response).then(() => {
+      console.log('getFront has finished');
+    });
+  }
+
   if (pathName.startsWith('/api/users')) {
     switch (method) {
-      case 'GET':
+      case HttpMethod.GET:
         getHandler(request, response);
         break;
-      case 'POST':
+      case HttpMethod.POST:
         postHandler(request, response);
         break;
-      case 'PUT':
+      case HttpMethod.PUT:
         putHandler(request, response);
         break;
-      case 'DELETE':
+      case HttpMethod.DELETE:
         deleteHandler(request, response);
         break;
       default:

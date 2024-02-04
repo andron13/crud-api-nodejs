@@ -1,17 +1,14 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 
-import { validate as uuidValidate } from 'uuid';
-
 import { UserService } from '../../services/user';
-import { HttpStatus, customSendResponse, ErrorMessage } from '../../utils';
+import { HttpStatus, customSendResponse, MESSAGES } from '../../utils';
+import { extractUserID, isBrokenUserLink } from '../../utils/userPath';
 
 const users = UserService.getInstance();
 export const getHandler = (request: IncomingMessage, response: ServerResponse): void => {
   const { pathname } = parse(request.url || '', true);
-
-  const splitPathname = pathname?.split('/') || [];
-  const isUserId = splitPathname.length >= 3 && uuidValidate(splitPathname[3]); // Check UUID at the third position
+  const { userID, isUUID, splitPathname } = extractUserID(pathname);
 
   if (pathname === '/api/users' || pathname === '/api/users/') {
     const allUsers = users.getAll();
@@ -19,17 +16,25 @@ export const getHandler = (request: IncomingMessage, response: ServerResponse): 
       data: { users: allUsers },
       error: null,
     });
-  } else if (isUserId) {
-    const user = users.findOne(splitPathname[3]);
+  } else if (isUUID) {
+    const user = users.findOne(userID);
     if (user) {
       customSendResponse(response, HttpStatus.OK, {
         data: { user },
         error: null,
       });
+    } else {
+      customSendResponse(response, HttpStatus.BAD_REQUEST, {
+        error: MESSAGES.NOT_FOUND(userID),
+      });
     }
+  } else if (isBrokenUserLink(splitPathname[2])) {
+    customSendResponse(response, HttpStatus.BAD_REQUEST, {
+      error: MESSAGES.PAGE_NOT_FOUND,
+    });
   } else {
-    customSendResponse(response, HttpStatus.NOT_FOUND, {
-      error: ErrorMessage.NOT_FOUND,
+    customSendResponse(response, HttpStatus.BAD_REQUEST, {
+      error: MESSAGES.INVALID_USER_ID(userID),
     });
   }
 };
