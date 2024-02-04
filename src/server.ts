@@ -1,10 +1,10 @@
+// src/server.ts
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 
-import { router } from './router';
-import { Users } from '../user/user';
+import router from './routes';
 
-export const server = createServer((request: IncomingMessage, response: ServerResponse) => {
-  router(request, response, Users.users);
+const server = createServer((request: IncomingMessage, response: ServerResponse) => {
+  router(request, response);
 });
 
 export const startServer = (): void => {

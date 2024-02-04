@@ -22,41 +22,50 @@ export class User {
   }
 }
 
-export class Users {
-  static users: User[] = [];
-  static init(mockUsers: any[]): void {
+export class UserService {
+  private static instance: UserService;
+  private users: User[] = [];
+
+  private constructor(mockUsers: any[]) {
     for (const mockUser of mockUsers) {
       const user = new User(mockUser.username, mockUser.age, mockUser.hobbies);
-      user.id = mockUser.id;
       this.users.push(user);
     }
   }
-  static create(username: string, age: number, hobbies: string[]): User {
+
+  static getInstance(): UserService {
+    if (!this.instance) {
+      this.instance = new UserService(mockUsers);
+    }
+    return this.instance;
+  }
+
+  create(username: string, age: number, hobbies: string[]): User {
     const user = new User(username, age, hobbies);
     this.users.push(user);
     return user;
   }
 
-  static read(id: string): User | undefined {
+  findOne(id: string): User | undefined {
     return this.users.find((user) => user.id === id);
   }
 
-  static update(id: string, user: Partial<User>): User | undefined {
-    const targetUser = this.read(id);
-
+  update(id: string, user: Partial<User>): User | undefined {
+    const targetUser = this.findOne(id);
     if (!targetUser) {
       return undefined;
     }
-
     targetUser.update(user);
     return targetUser;
   }
 
-  static delete(id: string): boolean {
+  delete(id: string): boolean {
     const initialLength = this.users.length;
     this.users = this.users.filter((user) => user.id !== id);
     return this.users.length < initialLength;
   }
-}
 
-Users.init(mockUsers);
+  getAll(): User[] {
+    return this.users;
+  }
+}

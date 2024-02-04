@@ -1,6 +1,7 @@
+// src/app.ts
 import cluster from 'cluster';
 
-import { startServer } from './server/server';
+import { startServer } from './server';
 import { config, numCPUs } from './utils';
 
 const basePort: number = config.port;
