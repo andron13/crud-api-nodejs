@@ -1,32 +1,41 @@
+import cluster from 'cluster';
 import * as http from 'http';
-import { config } from './utils/config';
-import { isMulti } from './utils/export';
+
+import { mockUsers } from './user/mockUsers';
+import { isMulti, numCPUs, config } from './utils/export';
 
 const hostname: string = config.hostname || '127.0.0.1';
 const port: string | undefined = config.port;
+cluster.isPrimary;
+console.log('#### cluster.isPrimary####', cluster.isPrimary);
 console.log(port);
 console.log(hostname);
+
 console.log('###### isMulti  ######', isMulti);
 
-/*if (cluster.isMaster) {
-  // Создание рабочих процессов
-  for (let i = -1; i < numCPUs - 2; i++) {
-    cluster.fork(port + i); // Передача порта в качестве переменной окружения
+// User records
+const users = mockUsers;
+
+if (cluster.isPrimary) {
+  console.log(`Primary ${process.pid} is running`);
+
+  // Fork workers.
+  for (let i = 0; i < numCPUs; i++) {
+    cluster.fork();
   }
+
+  cluster.on('exit', (worker, code, signal) => {
+    console.log(`worker ${worker.process.pid} died`);
+  });
 } else {
-  // Запуск сервера для каждого рабочего процесса
-  require('./app.js');
-}*/
+  // Workers can share any TCP connection
+  // In this case it is an HTTP server
+  http
+    .createServer((req, res) => {
+      res.writeHead(200);
+      res.end('hello world\n');
+    })
+    .listen(8000);
 
-const server = http.createServer((request, response) => {
-  response.statusCode = 200;
-  response.setHeader('Content-Type', 'text/plain');
-  response.write('Hello World!');
-  response.write('text2');
-  response.write('text3');
-  response.end();
-});
-
-server.listen(port, () => {
-  console.log(`Server starts on http://${hostname}:${port}/`);
-});
+  console.log(`Worker ${process.pid} started`);
+}

@@ -8,7 +8,6 @@
 
 This is a [student project](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md) developed in NodeJS. It was created as part of the curriculum for the [RS School](https://rs.school/).
 
-
 ## Technical Requirements
 
 - The implementation can be done in JavaScript or TypeScript.
@@ -21,7 +20,7 @@ This is a [student project](https://github.com/AlreadyBored/nodejs-assignments/b
 1. Implement the `api/users` endpoint:
    - **GET** `api/users` is used to retrieve all users.
      - The server should respond with ✅ **200** status and all user records.
-   - **GET** `api/users/{userId}` 
+   - **GET** `api/users/{userId}`
      - The server should respond with ✅ **200** status and the record with `id === userId` if it exists.
      - The server should respond with ❌ **400** status and an appropriate message if `userId` is invalid (not a `uuid`).
      - The server should respond with ❌ **404** status and an appropriate message if the record with `id === userId` does not exist.
@@ -39,5 +38,3 @@ This is a [student project](https://github.com/AlreadyBored/nodejs-assignments/b
 ## License
 
 This project is licensed under the [MIT License](https://opensource.org/licenses/MIT).
-
-

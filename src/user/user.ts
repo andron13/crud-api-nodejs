@@ -1,5 +1,6 @@
-import { v4 as uuidv4, validate } from "uuid";
-import { IUser } from "../types/user";
+import { v4 as uuidv4, validate } from 'uuid';
+
+import { IUser } from '../types/user';
 
 export class User implements IUser {
   id: string;
@@ -14,10 +15,22 @@ export class User implements IUser {
     this.hobbies = [...hobbies];
   }
 
-  updateUser({ id, username, age, hobbies }: { id?: string; username?: string; age?: number; hobbies?: string[] }): void {
+  updateUser({
+    id,
+    username,
+    age,
+    hobbies,
+  }: {
+    id?: string;
+    username?: string;
+    age?: number;
+    hobbies?: string[];
+  }): void {
     if (id && validate(id)) this.id = id;
     if (username) this.username = username;
     if (age) this.age = age;
     if (hobbies) this.hobbies = [...hobbies];
   }
 }
+
+export const Users: User[] = [];
