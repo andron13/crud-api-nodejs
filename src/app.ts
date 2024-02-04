@@ -1,17 +1,18 @@
 import cluster from 'cluster';
-import * as http from 'http';
+import { cpus } from 'os';
 
+import { startServer } from './server/server';
 import { mockUsers } from './user/mockUsers';
-import { isMulti, numCPUs, config } from './utils/export';
 
-const hostname: string = config.hostname || '127.0.0.1';
-const port: string | undefined = config.port;
-cluster.isPrimary;
-console.log('#### cluster.isPrimary####', cluster.isPrimary);
-console.log(port);
-console.log(hostname);
+const basePort: number = 4000;
+const numCores = cpus().length;
 
-console.log('###### isMulti  ######', isMulti);
+// Exception handling
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err.message);
+  console.error(err.stack);
+  process.exit(1);
+});
 
 // User records
 const users = mockUsers;
@@ -20,22 +21,15 @@ if (cluster.isPrimary) {
   console.log(`Primary ${process.pid} is running`);
 
   // Fork workers.
-  for (let i = 0; i < numCPUs; i++) {
-    cluster.fork();
+  for (let i = 0; i < numCores; i++) {
+    cluster.fork({ PORT: (basePort + i).toString() });
   }
 
   cluster.on('exit', (worker, code, signal) => {
-    console.log(`worker ${worker.process.pid} died`);
+    console.error(`worker ${worker.process.pid} died`);
+    cluster.fork(); // if you want to restart worker on its death
   });
 } else {
-  // Workers can share any TCP connection
-  // In this case it is an HTTP server
-  http
-    .createServer((req, res) => {
-      res.writeHead(200);
-      res.end('hello world\n');
-    })
-    .listen(8000);
-
+  startServer();
   console.log(`Worker ${process.pid} started`);
 }
