@@ -3,12 +3,12 @@ import { parse } from 'url';
 
 import { UserService } from '../../services/user';
 import { HttpStatus, customSendResponse, MESSAGES } from '../../utils';
-import { extractUserID, isBrokenUserLink } from '../../utils/userPath';
+import { extractUserID } from '../../utils/userPath';
 
 const users = UserService.getInstance();
 export const getHandler = (request: IncomingMessage, response: ServerResponse): void => {
   const { pathname } = parse(request.url || '', true);
-  const { userID, isUUID, splitPathname } = extractUserID(pathname);
+  const { userID, isUUID } = extractUserID(pathname);
 
   if (pathname === '/api/users' || pathname === '/api/users/') {
     const allUsers = users.getAll();
@@ -28,10 +28,6 @@ export const getHandler = (request: IncomingMessage, response: ServerResponse): 
         error: MESSAGES.NOT_FOUND(userID),
       });
     }
-  } else if (isBrokenUserLink(splitPathname[2])) {
-    customSendResponse(response, HttpStatus.BAD_REQUEST, {
-      error: MESSAGES.PAGE_NOT_FOUND,
-    });
   } else {
     customSendResponse(response, HttpStatus.BAD_REQUEST, {
       error: MESSAGES.INVALID_USER_ID(userID),

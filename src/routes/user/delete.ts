@@ -3,21 +3,14 @@ import { parse } from 'url';
 
 import { UserService } from '../../services/user';
 import { customSendResponse, HttpStatus, MESSAGES } from '../../utils';
-import { extractUserID, isBrokenUserLink } from '../../utils/userPath';
+import { extractUserID } from '../../utils/userPath';
 
 const users = UserService.getInstance();
 
 export const deleteHandler = (request: IncomingMessage, response: ServerResponse): void => {
   const { pathname } = parse(request.url || '', true);
-  const { userID, isUUID, splitPathname } = extractUserID(pathname);
+  const { userID, isUUID } = extractUserID(pathname);
   const user = users.findOne(userID);
-
-  if (isBrokenUserLink(splitPathname[2])) {
-    customSendResponse(response, HttpStatus.BAD_REQUEST, {
-      error: MESSAGES.PAGE_NOT_FOUND,
-    });
-    return;
-  }
 
   if (isUUID && user) {
     users.delete(userID);
@@ -35,5 +28,3 @@ export const deleteHandler = (request: IncomingMessage, response: ServerResponse
     });
   }
 };
-
-export default deleteHandler;

@@ -3,3 +3,4 @@ export { config } from './config';
 export { isMulti } from './isMulti';
 export { MESSAGES, HttpStatus, HttpMethod } from './messages';
 export { customSendResponse } from './httpResponse';
+export { read } from './fsCrud/read';

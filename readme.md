@@ -100,3 +100,14 @@ Your task is to implement simple CRUD API using in-memory database underneath.
 - **-20** Missing PR or its description is incorrect
 - **-20** No separate development branch
 - **-20** Less than 3 commits in the development branch, not including commits that make changes only to `Readme.md` or similar files (`tsconfig.json`, `.gitignore`, `.prettierrc.json`, etc.)
+
+
+## 
+
+```json
+{
+  "username": "newUsername",
+  "age": 23,
+  "hobbies": ["coding", "reading", "hiking"]
+}
+```
