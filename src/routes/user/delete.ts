@@ -1,11 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 
-import { UserService } from '../../services/user';
+import { users } from '../../services/user';
 import { customSendResponse, HttpStatus, MESSAGES } from '../../utils';
 import { extractUserID } from '../../utils/userPath';
-
-const users = UserService.getInstance();
 
 export const deleteHandler = (request: IncomingMessage, response: ServerResponse): void => {
   const { pathname } = parse(request.url || '', true);

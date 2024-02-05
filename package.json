@@ -30,6 +30,7 @@
   "author": "andron13",
   "license": "ISC",
   "dependencies": {
+    "cross-env": "^7.0.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {

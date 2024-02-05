@@ -1,9 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
-import { UserService } from '../../services/user';
+import { User, users } from '../../services/user';
+import { customSendResponse, HttpStatus, MESSAGES } from '../../utils';
 import { isUserDataValid } from '../../utils/validate';
-
-const users = UserService.getInstance();
 
 export const postHandler = (request: IncomingMessage, response: ServerResponse): void => {
   let body = '';
@@ -13,11 +12,33 @@ export const postHandler = (request: IncomingMessage, response: ServerResponse):
   });
 
   request.on('end', () => {
-    const reqData = JSON.parse(body);
-    if (isUserDataValid(reqData)) {
-      console.log('valid', reqData);
-    } else {
-      console.log('not valid', reqData);
+    try {
+      const reqUser = JSON.parse(body);
+      if (!reqUser) {
+        customSendResponse(response, HttpStatus.BAD_REQUEST, {
+          error: MESSAGES.REQUEST_BODY_IS_MISSING,
+        });
+        return;
+      }
+
+      let user: User;
+
+      if (isUserDataValid(reqUser)) {
+        user = users.create(reqUser);
+        customSendResponse(response, HttpStatus.CREATED, {
+          user,
+          error: null,
+        });
+      } else {
+        customSendResponse(response, HttpStatus.BAD_REQUEST, {
+          error: MESSAGES.REQUIRED_FIELDS_MISSING,
+        });
+      }
+    } catch (error) {
+      customSendResponse(response, HttpStatus.BAD_REQUEST, {
+        error,
+        errorMessage: MESSAGES.INVALID_JSON_FORMAT,
+      });
     }
   });
 };

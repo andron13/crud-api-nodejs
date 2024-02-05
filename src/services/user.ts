@@ -22,7 +22,7 @@ export class User {
   }
 }
 
-export class UserService {
+class UserService {
   private static instance: UserService;
   private users: User[] = [];
 
@@ -40,10 +40,10 @@ export class UserService {
     return this.instance;
   }
 
-  create(username: string, age: number, hobbies: string[]): User {
-    const user = new User(username, age, hobbies);
-    this.users.push(user);
-    return user;
+  create(user: User): User {
+    const newUser = new User(user.username, user.age, user.hobbies);
+    this.users.push(newUser);
+    return newUser;
   }
 
   findOne(id: string): User | undefined {
@@ -69,3 +69,5 @@ export class UserService {
     return this.users;
   }
 }
+
+export const users = UserService.getInstance();

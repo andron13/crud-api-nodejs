@@ -5,13 +5,21 @@
  * @returns {boolean} True if an object is not empty and all properties are present and not empty, false otherwise.
  */
 export const isUserDataValid = (data) => {
-  if (Object.keys(data).length === 0) return false; // Проверка на то, что объект не пустой.
+  if (Object.keys(data).length === 0) return false;
 
-  const requiredFields = ['username', 'age', 'hobbies']; // Список обязательных полей.
+  const requiredFields = ['username', 'age', 'hobbies'];
 
   for (const field of requiredFields) {
     if (!data[field]) return false;
   }
 
   return true;
+};
+
+export const isOneUserFieldValid = (data) => {
+  if (Object.keys(data).length === 0) return false;
+
+  const requiredFields = ['username', 'age', 'hobbies'];
+
+  return requiredFields.some((field) => Object.keys(data).includes(field) && Boolean(data[field]));
 };
