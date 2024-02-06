@@ -10,14 +10,19 @@ const fourHundred = (response: ServerResponse): void => {
   customSendResponse(response, HttpStatus.BAD_REQUEST, { message: MESSAGES.PAGE_NOT_FOUND });
 };
 
-const router = (request: IncomingMessage, response: ServerResponse): void => {
+export const router = (request: IncomingMessage, response: ServerResponse): void => {
   const { method } = request;
   const parsedUrl = url.parse(request.url as string, true);
   const pathName = parsedUrl.pathname;
   const { userID, isUUID, splitPathname } = extractUserID(pathName);
 
   if (pathName === '/' && method === HttpMethod.GET) {
-    getFront(request, response).then(() => {});
+    getFront(request, response).catch((err) => {
+      console.error(`Failed to get front: ${err.message}`);
+      customSendResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, {
+        error: MESSAGES.INTERNAL_SERVER_ERROR,
+      });
+    });
   }
 
   if (pathName.startsWith('/api/users') && isBrokenUserLink(splitPathname[2])) {
@@ -28,23 +33,25 @@ const router = (request: IncomingMessage, response: ServerResponse): void => {
   }
 
   if (pathName.startsWith('/api/users')) {
-    switch (method) {
-      case HttpMethod.GET:
-        getHandler(request, response);
-        break;
-      case HttpMethod.POST:
-        postHandler(request, response);
-        break;
-      case HttpMethod.PUT:
-        putHandler(request, response);
-        break;
-      case HttpMethod.DELETE:
-        deleteHandler(request, response);
-        break;
-      default:
-        fourHundred(response);
-    }
+    handleApiRequest(request, response, method);
   }
 };
 
-export default router;
+const handleApiRequest = (request: IncomingMessage, response: ServerResponse, method: string) => {
+  switch (method) {
+    case HttpMethod.GET:
+      getHandler(request, response);
+      break;
+    case HttpMethod.POST:
+      postHandler(request, response);
+      break;
+    case HttpMethod.PUT:
+      putHandler(request, response);
+      break;
+    case HttpMethod.DELETE:
+      deleteHandler(request, response);
+      break;
+    default:
+      fourHundred(response);
+  }
+};

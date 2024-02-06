@@ -47,6 +47,7 @@ export const MESSAGES = {
   PAGE_NOT_FOUND_POSSIBLY_BROKEN_LINK: 'Status code: 404 - Possibly a broken link',
   INVALID_JSON_FORMAT: 'Invalid JSON format',
   REQUEST_BODY_IS_MISSING: 'Request body is missing',
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
 };
 
 /**

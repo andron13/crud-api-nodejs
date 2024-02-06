@@ -2,7 +2,7 @@
 import cluster from 'cluster';
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 
-import router from './routes';
+import { router } from './routes';
 import { config, numCPUs } from './utils';
 
 const port: number = config.port;
