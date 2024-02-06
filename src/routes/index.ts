@@ -17,9 +17,7 @@ const router = (request: IncomingMessage, response: ServerResponse): void => {
   const { userID, isUUID, splitPathname } = extractUserID(pathName);
 
   if (pathName === '/' && method === HttpMethod.GET) {
-    getFront(request, response).then(() => {
-      console.log('getFront has finished');
-    });
+    getFront(request, response).then(() => {});
   }
 
   if (pathName.startsWith('/api/users') && isBrokenUserLink(splitPathname[2])) {
