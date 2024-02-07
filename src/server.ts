@@ -6,7 +6,7 @@ import { config, MESSAGES, numCPUs } from './utils';
 
 const port: number = config.port;
 
-const createHttpServer = () => {
+export const createHttpServer = () => {
   const server = createServer((request: IncomingMessage, response: ServerResponse) => {
     router(request, response);
   });
