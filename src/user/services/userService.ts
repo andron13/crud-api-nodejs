@@ -1,41 +1,14 @@
-import { v4 as uuidv4 } from 'uuid';
-
-import { mockUsers } from './mockUsers';
-
-export class User {
-  id: string;
-  username: string;
-  age: number;
-  hobbies: string[];
-
-  constructor(username: string, age: number, hobbies: string[]) {
-    this.id = uuidv4();
-    this.username = username;
-    this.age = age;
-    this.hobbies = hobbies;
-  }
-
-  update(newUser: Partial<User>): void {
-    if (newUser.username) this.username = newUser.username;
-    if (newUser.age) this.age = newUser.age;
-    if (newUser.hobbies) this.hobbies = newUser.hobbies;
-  }
-}
+import { User } from '../model/user';
 
 class UserService {
   private static instance: UserService;
   private users: User[] = [];
 
-  private constructor(mockUsers: any[]) {
-    for (const mockUser of mockUsers) {
-      const user = new User(mockUser.username, mockUser.age, mockUser.hobbies);
-      this.users.push(user);
-    }
-  }
+  private constructor() {}
 
   static getInstance(): UserService {
     if (!this.instance) {
-      this.instance = new UserService(mockUsers);
+      this.instance = new UserService();
     }
     return this.instance;
   }

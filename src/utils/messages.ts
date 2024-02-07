@@ -39,15 +39,21 @@ export const enum HttpStatus {
  * @property {string} PAGE_NOT_FOUND - Message to indicate that the requested page was not found.
  */
 export const MESSAGES = {
+  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  INVALID_JSON_FORMAT: 'Invalid JSON format',
   INVALID_USER_ID: (userID: string) => `Invalid user ID: ${userID}`,
   NOT_FOUND: (userID: string) => `NOT_FOUND id === ${userID} doesn't exist`,
-  REQUIRED_FIELDS_MISSING: 'Required fields are missing',
-  SERVER_ERROR: 'SERVER_ERROR human-friendly message',
+  NUM_CPUS: 'Current system has %numCPUs% CPU cores available.',
   PAGE_NOT_FOUND: 'status code 404 and corresponding human-friendly message',
   PAGE_NOT_FOUND_POSSIBLY_BROKEN_LINK: 'Status code: 404 - Possibly a broken link',
-  INVALID_JSON_FORMAT: 'Invalid JSON format',
+  PRIMARY_RUNNING: 'Primary %pid% is running',
+  REQUIRED_FIELDS_MISSING: 'Required fields are missing',
   REQUEST_BODY_IS_MISSING: 'Request body is missing',
-  INTERNAL_SERVER_ERROR: 'INTERNAL_SERVER_ERROR',
+  SERVER_CLOSE_FAIL: 'Failed to close server:',
+  SERVER_ERROR: 'Server error',
+  SIGINT_RECEIVED: 'Received SIGINT. Shutting down gracefully...',
+  WORKER_DIED: 'Worker %pid% died with code %code% and signal %signal%',
+  WORKER_STARTED: 'Worker %pid% started. Server running at http://localhost:%port%/',
 };
 
 /**

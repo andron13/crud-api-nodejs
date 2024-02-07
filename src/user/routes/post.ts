@@ -1,8 +1,8 @@
 import { IncomingMessage, ServerResponse } from 'http';
 
-import { User, users } from '../../services/user';
 import { customSendResponse, HttpStatus, MESSAGES } from '../../utils';
-import { isUserDataValid } from '../../utils/validate';
+import { isUserDataValid } from '../../utils/userFiledsvalidate';
+import { User, users } from '../index';
 
 export const postHandler = (request: IncomingMessage, response: ServerResponse): void => {
   let body = '';

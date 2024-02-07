@@ -1,5 +1,3 @@
-// src/app.ts
-
 import { startServer } from './server';
 import { isMulti } from './utils';
 

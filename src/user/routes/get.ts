@@ -1,9 +1,9 @@
 import { IncomingMessage, ServerResponse } from 'http';
 import { parse } from 'url';
 
-import { users } from '../../services/user';
 import { HttpStatus, customSendResponse, MESSAGES } from '../../utils';
 import { extractUserID } from '../../utils/userPath';
+import { users } from '../index';
 
 export const getHandler = (request: IncomingMessage, response: ServerResponse): void => {
   const { pathname } = parse(request.url || '', true);

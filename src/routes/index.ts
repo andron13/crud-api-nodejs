@@ -2,7 +2,7 @@ import { IncomingMessage, ServerResponse } from 'http';
 import * as url from 'url';
 
 import { getFront } from './front';
-import { deleteHandler, getHandler, postHandler, putHandler } from './user';
+import { deleteHandler, getHandler, postHandler, putHandler } from '../user/routes';
 import { MESSAGES, HttpStatus, customSendResponse, HttpMethod } from '../utils';
 import { extractUserID, isBrokenUserLink } from '../utils/userPath';
 

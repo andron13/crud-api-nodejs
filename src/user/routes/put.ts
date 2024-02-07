@@ -2,8 +2,8 @@ import { IncomingMessage, ServerResponse } from 'http';
 
 import { validate } from 'uuid';
 
-import { User, users } from '../../services/user';
 import { customSendResponse, HttpStatus, MESSAGES } from '../../utils';
+import { users } from '../index';
 
 export const putHandler = (request: IncomingMessage, response: ServerResponse): void => {
   let body = '';
