@@ -1,8 +1,11 @@
+// src/server.ts
+
 import cluster from 'cluster';
 import { createServer, IncomingMessage, ServerResponse } from 'http';
 
 import { router } from './routes';
 import { config, MESSAGES, numCPUs } from './utils';
+import { whatDoesWorkerSay } from './workers/cluster';
 
 const port: number = config.port;
 
@@ -29,19 +32,28 @@ export const startServer = (isMulti: boolean): void => {
       console.log(MESSAGES.NUM_CPUS.replace('%numCPUs%', numCPUs.toString()));
 
       for (let i = 0; i < numCPUs; i++) {
-        cluster.fork({ PORT: (port + i).toString() });
+        const worker = cluster.fork({ PORT: (port + i).toString() });
+        worker.on('message', (msg) => {
+          whatDoesWorkerSay(msg);
+        });
       }
 
-      cluster.on('exit', (worker, code, signal) => {
+      cluster.on('exit', (oldWorker, code, signal) => {
         console.log(
-          MESSAGES.WORKER_DIED.replace('%pid%', worker.process.pid.toString())
+          MESSAGES.WORKER_DIED.replace('%pid%', oldWorker.process.pid.toString())
             .replace('%code%', code.toString())
             .replace('%signal%', signal.toString()),
         );
-        cluster.fork({ PORT: port + Object.keys(cluster.workers).length });
+        const newWorker = cluster.fork({ PORT: port + Object.keys(cluster.workers).length });
+        newWorker.on('message', (msg) => {
+          whatDoesWorkerSay(msg);
+        });
       });
     } else {
-      cluster.fork({ port: port });
+      const worker = cluster.fork({ PORT: port + Object.keys(cluster.workers).length });
+      worker.on('message', (msg) => {
+        whatDoesWorkerSay(msg);
+      });
     }
   } else {
     const workerPort = process.env.PORT || port;
@@ -50,6 +62,8 @@ export const startServer = (isMulti: boolean): void => {
       console.log(
         MESSAGES.WORKER_STARTED.replace('%pid%', process.pid.toString()).replace('%port%', workerPort.toString()),
       );
+      // TODO
+      process.send({ method: 'methodB', params: 'Hello Master' });
       isServerRunning = true;
     });
   }

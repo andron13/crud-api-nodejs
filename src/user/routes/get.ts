@@ -10,6 +10,8 @@ export const getHandler = (request: IncomingMessage, response: ServerResponse): 
   const { userID, isUUID } = extractUserID(pathname);
 
   if (pathname === '/api/users' || pathname === '/api/users/') {
+    //TODO
+    // process.send({ method: 'users.getAll()' });
     const allUsers = users.getAll();
     customSendResponse(response, HttpStatus.OK, {
       data: { users: allUsers },

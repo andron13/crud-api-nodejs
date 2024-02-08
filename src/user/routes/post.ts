@@ -6,7 +6,6 @@ import { User, users } from '../index';
 
 export const postHandler = (request: IncomingMessage, response: ServerResponse): void => {
   let body = '';
-
   request.on('data', (chunk) => {
     body += chunk;
   });
