@@ -1,4 +1,5 @@
 import { IncomingMessage, ServerResponse } from 'http';
+import process from 'process';
 import * as url from 'url';
 
 import { getFront } from './front';
@@ -41,6 +42,7 @@ const handleApiRequest = (request: IncomingMessage, response: ServerResponse, me
   switch (method) {
     case HttpMethod.GET:
       getHandler(request, response);
+      process.send({ method: 'get' });
       break;
     case HttpMethod.POST:
       postHandler(request, response);

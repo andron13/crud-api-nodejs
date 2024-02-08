@@ -1,5 +1,7 @@
 // src/user/services/userService.ts
 
+import * as process from 'process';
+
 import { User } from '../model/user';
 
 class UserService {
@@ -18,6 +20,7 @@ class UserService {
   create(user: User): User {
     const newUser = new User(user.username, user.age, user.hobbies);
     this.users.push(newUser);
+    process.send({ method: 'create', params: newUser });
     return newUser;
   }
 
@@ -31,12 +34,14 @@ class UserService {
       return undefined;
     }
     targetUser.update(user);
+    process.send({ method: 'update', params: targetUser });
     return targetUser;
   }
 
   delete(id: string): boolean {
     const initialLength = this.users.length;
     this.users = this.users.filter((user) => user.id !== id);
+    process.send({ method: 'delete', params: id });
     return this.users.length < initialLength;
   }
 
