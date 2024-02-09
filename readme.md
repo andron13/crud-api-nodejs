@@ -1,6 +1,13 @@
-# NodeJS CRUD API
+# NodeJS CRUD API 🚀
 
-This project is a completion of assignments in [NodeJS](https://nodejs.org/en/) specifically the [CRUD API](https://github.com/AlreadyBored/nodejs-assignments/tree/main/assignments/crud-api) category.
+<p align="center">
+  <img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License">
+</p>
+
+<p align="center">A simple CRUD API implementation using an in-memory database.</p>
+
+This is a [student project](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md) developed in NodeJS.
+It was created as part of the curriculum for the [RS School](https://rs.school/).
 
 ## Description
 
@@ -64,31 +71,29 @@ This application includes the following endpoints under `api/users`:
 #### GET api/users/{userId}
 
 - Retrieves a specific user by `userId`.
-- Server responds with status code `200` and the user record with the corresponding `userId`.
-- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
-- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
+- Server responds with status code ✅ `200` and the user record with the corresponding `userId`.
+- Server responds with status code ❌`400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code ❌`404` and a corresponding message if a record with `userId` doesn't exist.
 
 #### POST api/users
 
 - Creates a new user record.
-- Server responds with status code `201` and the newly created record.
-- Server responds with status code `400` and a corresponding message if the request body does not contain required fields.
+- Server responds with status code ✅`201` and the newly created record.
+- Server responds with status code ❌`400` and a corresponding message if the request body does not contain required fields.
 
 #### PUT api/users/{userId}
 
 - Updates an existing user record.
-- Server responds with status code `200` and the updated record.
-- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
-- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
+- Server responds with status code ✅`200` and the updated record.
+- Server responds with status code ❌`400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code ❌`404` and a corresponding message if a record with `userId` doesn't exist.
 
 #### DELETE api/users/{userId}
 
 - Deletes an existing user record.
-- Server responds with status code `204` if the record is found and successfully deleted.
-- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
-- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
-
-
+- Server responds with status code ✅`204` if the record is found and successfully deleted.
+- Server responds with status code ❌`400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code ❌`404` and a corresponding message if a record with `userId` doesn't exist.
 
 ## Dependencies
 
