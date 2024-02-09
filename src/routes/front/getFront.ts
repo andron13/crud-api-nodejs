@@ -12,7 +12,8 @@ export const getFront = async (req: IncomingMessage, res: ServerResponse) => {
     res.end();
   } catch (error) {
     res.statusCode = 500;
-    res.write(`Failed to read file: ${error.message}`);
+    // res.write(`Failed to read file: ${error}`);
+    res.write(`Production mode`);
     res.end();
   }
 };

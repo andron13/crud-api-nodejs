@@ -1,8 +1,9 @@
 {
   "scripts": {
-    "start:prod": "tsc && node dist/app.js",
     "start:dev": "nodemon",
     "start:multi": "nodemon -- --isMulti=true",
+    "start:prod": "npm run build && node ./dist/app.js",
+    "build": "webpack --config ./webpack.config.ts --env mode=production",
     "test": "jest",
     "test:silent": "jest --silent",
     "test:detectOpenHandles": "jest --detectOpenHandles",
@@ -32,10 +33,10 @@
   "author": "andron13",
   "license": "ISC",
   "dependencies": {
-    "cross-env": "^7.0.3",
     "uuid": "^9.0.0"
   },
   "devDependencies": {
+    "@types/dotenv-webpack": "^7.0.7",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.2",
     "@types/node": "^20.3.2",
@@ -43,6 +44,8 @@
     "@types/uuid": "^9.0.2",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.0.0",
+    "cross-env": "^7.0.3",
+    "dotenv-webpack": "^8.0.1",
     "eslint": "^8",
     "eslint-config-prettier": "^9.1.0",
     "eslint-import-resolver-typescript": "^3.6.1",
@@ -54,6 +57,7 @@
     "prettier": "^3.2.2",
     "supertest": "^6.3.4",
     "ts-jest": "^29.1.2",
+    "ts-loader": "^9.5.1",
     "ts-node": "^10.9.1",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.3.3",

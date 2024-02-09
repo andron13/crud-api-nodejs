@@ -19,10 +19,11 @@ export const router = (request: IncomingMessage, response: ServerResponse): void
 
   if (pathName === '/' && method === HttpMethod.GET) {
     getFront(request, response).catch((err) => {
-      console.error(`Failed to get front: ${err.message}`);
-      customSendResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, {
-        error: MESSAGES.INTERNAL_SERVER_ERROR,
-      });
+      console.log('Production mode');
+      // console.error(`Failed to get front: ${err.message}`);
+      // customSendResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, {
+      //   error: MESSAGES.INTERNAL_SERVER_ERROR,
+      // });
     });
   }
 
