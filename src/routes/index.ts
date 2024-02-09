@@ -15,10 +15,10 @@ export const router = (request: IncomingMessage, response: ServerResponse): void
   const { method } = request;
   const parsedUrl = url.parse(request.url as string, true);
   const pathName = parsedUrl.pathname;
-  const { userID, isUUID, splitPathname } = extractUserID(pathName);
+  const { splitPathname } = extractUserID(pathName);
 
   if (pathName === '/' && method === HttpMethod.GET) {
-    getFront(request, response).catch((err) => {
+    getFront(request, response).catch(() => {
       console.log('Production mode');
       // console.error(`Failed to get front: ${err.message}`);
       // customSendResponse(response, HttpStatus.INTERNAL_SERVER_ERROR, {

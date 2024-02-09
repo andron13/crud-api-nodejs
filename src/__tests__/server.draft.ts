@@ -1,12 +1,5 @@
-jest.mock('http');
-jest.mock('cluster');
-jest.mock('./routes');
-jest.mock('./utils');
-
 import cluster from 'cluster';
 import http from 'http';
-
-import { router } from '../routes';
 
 import { startServer } from '../server';
 import { numCPUs } from '../utils';
@@ -16,8 +9,6 @@ const mockServer = {
   on: jest.fn(),
   close: jest.fn(),
 };
-
-const mockRouter = jest.fn();
 
 const mockCluster = {
   isPrimary: true,
@@ -29,7 +20,6 @@ const mockCluster = {
 beforeEach(() => {
   jest.clearAllMocks();
   (http.createServer as jest.Mock).mockReturnValue(mockServer);
-  (router as jest.Mock) = mockRouter;
   (cluster as unknown as jest.Mocked<typeof cluster>) = mockCluster as any;
 });
 
