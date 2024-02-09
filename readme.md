@@ -1,113 +1,126 @@
-# Assignment: CRUD API
+# NodeJS CRUD API
+
+This project is a completion of assignments in [NodeJS](https://nodejs.org/en/) specifically the [CRUD API](https://github.com/AlreadyBored/nodejs-assignments/tree/main/assignments/crud-api) category.
 
 ## Description
 
-Your task is to implement simple CRUD API using in-memory database underneath.
+You are required to create an Express Application with the following functionalities:
 
-## Technical requirements
+- Routing and handling HTTP requests.
+- Tests
+- Load balancer (Round-robin algorithm)
 
-- Task can be implemented on Javascript or Typescript
-- Only `nodemon`, `dotenv`, `cross-env`, `typescript`, `ts-node`, `ts-node-dev`, `eslint` and its plugins, `webpack-cli`, `webpack` and its plugins, `prettier`, `uuid`, `@types/*` as well as libraries used for testing are allowed
-- Use 20 LTS version of Node.js
-- Prefer asynchronous API whenever possible
+## Setup & Installation
 
-## Implementation details
+1. Clone the repository
 
-1. Implemented endpoint `api/users`:
-
-- **GET** `api/users` is used to get all persons
-  - Server should answer with `status code` **200** and all users records
-- **GET** `api/users/{userId}`
-  - Server should answer with `status code` **200** and record with `id === userId` if it exists
-  - Server should answer with `status code` **400** and corresponding message if `userId` is invalid (not `uuid`)
-  - Server should answer with `status code` **404** and corresponding message if record with `id === userId` doesn't exist
-- **POST** `api/users` is used to create record about new user and store it in database
-  - Server should answer with `status code` **201** and newly created record
-  - Server should answer with `status code` **400** and corresponding message if request `body` does not contain **required** fields
-- **PUT** `api/users/{userId}` is used to update existing user
-  - Server should answer with` status code` **200** and updated record
-  - Server should answer with` status code` **400** and corresponding message if `userId` is invalid (not `uuid`)
-  - Server should answer with` status code` **404** and corresponding message if record with `id === userId` doesn't exist
-- **DELETE** `api/users/{userId}` is used to delete existing user from database
-  - Server should answer with `status code` **204** if the record is found and deleted
-  - Server should answer with `status code` **400** and corresponding message if `userId` is invalid (not `uuid`)
-  - Server should answer with `status code` **404** and corresponding message if record with `id === userId` doesn't exist
-
-2. Users are stored as `objects` that have following properties:
-
-- `id` — unique identifier (`string`, `uuid`) generated on server side
-- `username` — user's name (`string`, **required**)
-- `age` — user's age (`number`, **required**)
-- `hobbies` — user's hobbies (`array` of `strings` or empty `array`, **required**)
-
-3. Requests to non-existing endpoints (e.g. `some-non/existing/resource`) should be handled (server should answer with `status code` **404** and corresponding human-friendly message)
-4. Errors on the server side that occur during the processing of a request should be handled and processed correctly (server should answer with `status code` **500** and corresponding human-friendly message)
-5. Value of `port` on which application is running should be stored in `.env` file
-6. There should be 2 modes of running application (**development** and **production**):
-
-- The application is run in development mode using `nodemon` or `ts-node-dev` (there is a `npm` script `start:dev`)
-- The application is run in production mode (there is a `npm` script `start:prod` that starts the build process and then runs the bundled file)
-
-7. There could be some tests for API (not less than **3** scenarios). Example of test scenario:
-1. Get all records with a `GET` `api/users` request (an empty array is expected)
-1. A new object is created by a `POST` `api/users` request (a response containing newly created record is expected)
-1. With a `GET` `api/user/{userId}` request, we try to get the created record by its `id` (the created record is expected)
-1. We try to update the created record with a `PUT` `api/users/{userId}`request (a response is expected containing an updated object with the same `id`)
-1. With a `DELETE` `api/users/{userId}` request, we delete the created object by `id` (confirmation of successful deletion is expected)
-1. With a `GET` `api/users/{userId}` request, we are trying to get a deleted object by `id` (expected answer is that there is no such object)
-1. There could be implemented horizontal scaling for application, there should be `npm` script `start:multi` that starts multiple instances of your application using the Node.js `Cluster` API (equal to the number of available parallelism - 1 on the host machine, each listening on port PORT + n) with a **load balancer** that distributes requests across them (using Round-robin algorithm). For example: available parallelism is 4, `PORT` is 4000. On run `npm run start:multi` it works following way
-
-- On `localhost:4000/api` load balancer is listening for requests
-- On `localhost:4001/api`, `localhost:4002/api`, `localhost:4003/api` workers are listening for requests from load balancer
-- When user sends request to `localhost:4000/api`, load balancer sends this request to `localhost:4001/api`, next user request is sent to `localhost:4002/api` and so on.
-- After sending request to `localhost:4003/api` load balancer starts from the first worker again (sends request to `localhost:4001/api`)
-- State of db should be consistent between different workers, for example:
-  1. First `POST` request addressed to `localhost:4001/api` creates user
-  2. Second `GET` request addressed to `localhost:4002/api` should return created user
-  3. Third `DELETE` request addressed to `localhost:4003/api` deletes created user
-  4. Fourth `GET` request addressed to `localhost:4001/api` should return **404** status code for created user
-
-## Scoring: CRUD API
-
-### Basic Scope
-
-- **+10** The repository with the application contains a `Readme.md` file containing detailed instructions for installing, running and using the application
-- **+10** **GET** `api/users` implemented properly
-- **+10** **GET** `api/users/{userId}` implemented properly
-- **+10** **POST** `api/users` implemented properly
-- **+10** **PUT** `api/users/{userId}` implemented properly
-- **+10** **DELETE** `api/users/{userId}` implemented properly
-- **+6** Users are stored in the form described in the technical requirements
-- **+6** Value of `port` on which application is running is stored in `.env` file
-
-### Advanced Scope
-
-- **+30** Task implemented on Typescript
-- **+10** Processing of requests to non-existing endpoints implemented properly
-- **+10** Errors on the server side that occur during the processing of a request should be handled and processed properly
-- **+10** Development mode: `npm` script `start:dev` implemented properly
-- **+10** Production mode: `npm` script `start:prod` implemented properly
-
-### Hacker Scope
-
-- **+30** There are tests for API (not less than **3** scenarios)
-- **+50** There is horizontal scaling for application with a **load balancer**
-
-### Forfeits
-
-- **-95% of total task score** any external tools except `nodemon`, `dotenv`, `cross-env`, `typescript`, `ts-node`, `ts-node-dev`, `eslint` and its plugins, `webpack` and its plugins, `prettier` and it's plugins, `uuid`, `@types/*` as well as libraries used for testing
-- **-30% of total task score** Commits after deadline (except commits that affect only Readme.md, .gitignore, etc.)
-- **-20** Missing PR or its description is incorrect
-- **-20** No separate development branch
-- **-20** Less than 3 commits in the development branch, not including commits that make changes only to `Readme.md` or similar files (`tsconfig.json`, `.gitignore`, `.prettierrc.json`, etc.)
-
-
-## 
-
-```json
-{
-  "username": "newUsername",
-  "age": 23,
-  "hobbies": ["coding", "reading", "hiking"]
-}
 ```
+git clone git@github.com:andron13/crud-api-nodejs.git
+```
+
+2. Navigate to the `crud-api` directory
+
+```
+cd crud-api-nodejs
+```
+
+3. Install the dependencies
+
+```
+npm install
+```
+
+4. Start the server
+
+```
+npm run start:prod
+```
+
+## OPTIONAL: Start the server with nodemon (for development)
+
+```
+npm run start:dev
+```
+
+## OPTIONAL: load balancer (Round-robin algorithm)
+
+```
+npm run start:multi
+```
+
+## API
+
+Detailed descriptions of API requests can be found [here](https://github.com/AlreadyBored/nodejs-assignments/blob/main/assignments/crud-api/assignment.md).
+
+### API Endpoints
+
+This application includes the following endpoints under `api/users`:
+
+#### GET api/users
+
+- Retrieves all user records.
+- Server responds with status code `200` and all user records.
+
+#### GET api/users/{userId}
+
+- Retrieves a specific user by `userId`.
+- Server responds with status code `200` and the user record with the corresponding `userId`.
+- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
+
+#### POST api/users
+
+- Creates a new user record.
+- Server responds with status code `201` and the newly created record.
+- Server responds with status code `400` and a corresponding message if the request body does not contain required fields.
+
+#### PUT api/users/{userId}
+
+- Updates an existing user record.
+- Server responds with status code `200` and the updated record.
+- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
+
+#### DELETE api/users/{userId}
+
+- Deletes an existing user record.
+- Server responds with status code `204` if the record is found and successfully deleted.
+- Server responds with status code `400` and a corresponding message if `userId` is invalid (not a UUID).
+- Server responds with status code `404` and a corresponding message if a record with `userId` doesn't exist.
+
+
+
+## Dependencies
+
+- [Node.js](https://nodejs.org/) version >=20.0.0
+- [uuid](https://www.npmjs.com/package/uuid) version ^9.0.0
+
+## Dev Dependencies
+
+- [@types/dotenv-webpack](https://www.npmjs.com/package/@types/dotenv-webpack) version ^7.0.7
+- [@types/glob](https://www.npmjs.com/package/@types/glob) version ^8.1.0
+- [@types/jest](https://www.npmjs.com/package/@types/jest) version ^29.5.2
+- [@types/node](https://www.npmjs.com/package/@types/node) version ^20.3.2
+- [@types/supertest](https://www.npmjs.com/package/@types/supertest) version ^6.0.2
+- [@types/uuid](https://www.npmjs.com/package/@types/uuid) version ^9.0.2
+- [@typescript-eslint/eslint-plugin](https://www.npmjs.com/package/@typescript-eslint/eslint-plugin) version ^6.18.1
+- [@typescript-eslint/parser](https://www.npmjs.com/package/@typescript-eslint/parser) version ^6.0.0
+- [cross-env](https://www.npmjs.com/package/cross-env) version ^7.0.3
+- [dotenv-webpack](https://www.npmjs.com/package/dotenv-webpack) version ^8.0.1
+- [eslint](https://www.npmjs.com/package/eslint) version ^8
+- [eslint-config-prettier](https://www.npmjs.com/package/eslint-config-prettier) version ^9.1.0
+- [eslint-import-resolver-typescript](https://www.npmjs.com/package/eslint-import-resolver-typescript) version ^3.6.1
+- [eslint-plugin-import](https://www.npmjs.com/package/eslint-plugin-import) version ^2.29.1
+- [eslint-plugin-prettier](https://www.npmjs.com/package/eslint-plugin-prettier) version ^5.1.3
+- [eslint-plugin-simple-import-sort](https://www.npmjs.com/package/eslint-plugin-simple-import-sort) version ^10.0.0
+- [jest](https://www.npmjs.com/package/jest) version ^29.7.0
+- [nodemon](https://www.npmjs.com/package/nodemon) version ^3.0.3
+- [prettier](https://www.npmjs.com/package/prettier) version ^3.2.2
+- [supertest](https://www.npmjs.com/package/supertest) version ^6.3.4
+- [ts-jest](https://www.npmjs.com/package/ts-jest) version ^29.1.2
+- [ts-loader](https://www.npmjs.com/package/ts-loader) version ^9.5.1
+- [ts-node](https://www.npmjs.com/package/ts-node) version ^10.9.1
+- [ts-node-dev](https://www.npmjs.com/package/ts-node-dev) version ^2.0.0
+- [typescript](https://www.npmjs.com/package/typescript) version ^5.3.3
+- [webpack](https://www.npmjs.com/package/webpack) version ^5.90.1
+- [webpack-cli](https://www.npmjs.com/package/webpack-cli) version ^5.1.4

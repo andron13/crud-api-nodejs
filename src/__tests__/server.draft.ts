@@ -20,7 +20,7 @@ const mockCluster = {
 beforeEach(() => {
   jest.clearAllMocks();
   (http.createServer as jest.Mock).mockReturnValue(mockServer);
-  (cluster as unknown as jest.Mocked<typeof cluster>) = mockCluster as any;
+  (cluster as unknown as jest.Mocked<typeof cluster>) = mockCluster as never;
 });
 
 test('startServer starts server in multi mode', () => {

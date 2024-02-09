@@ -19,6 +19,6 @@ export const read = async (folder: string, file: string = 'index.html'): Promise
     await fsPromises.access(filePath, fsPromises.constants.F_OK);
     return await fsPromises.readFile(filePath, 'utf-8');
   } catch (err) {
-    throw new Error(err);
+    throw new Error(String(err));
   }
 };
