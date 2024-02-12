@@ -25,7 +25,7 @@ export const getHandler = (request: IncomingMessage, response: ServerResponse): 
         error: null,
       });
     } else {
-      customSendResponse(response, HttpStatus.BAD_REQUEST, {
+      customSendResponse(response, HttpStatus.NOT_FOUND, {
         error: MESSAGES.NOT_FOUND(userID),
       });
     }

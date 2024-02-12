@@ -15,7 +15,6 @@ describe('User PUT API tests', () => {
     const userResponse = await request(server)
       .post('/api/users')
       .send({ username: 'Test User', age: 28, hobbies: ['hobby1', 'hobby2'] });
-
     testUser = userResponse.body.user;
   });
 
@@ -41,11 +40,11 @@ describe('User PUT API tests', () => {
 
   // Attempting to update a non-existent user should fail
   test('PUT /api/users/:id - fail - user not found', async () => {
-    const nonExistentUserId = 'non-existent-user-id';
+    const nonExistentUserId = '0929477d-b287-45e3-bc63-5184b04460e3';
     const updatedUser = { ...testUser, id: nonExistentUserId };
     const response = await request(server).put(`/api/users/${nonExistentUserId}`).send(updatedUser);
-    expect(response.status).toBe(400);
-    expect(response.body.error).toBe('Invalid user ID: non-existent-user-id');
+    expect(response.status).toBe(404);
+    expect(response.body.error).toBe(`NOT_FOUND id === ${nonExistentUserId} doesn't exist`);
   });
 
   // Attempting to update an user with invalid JSON body should fail
