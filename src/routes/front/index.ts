@@ -1,0 +1,1 @@
+export { getFront } from './getFront';
